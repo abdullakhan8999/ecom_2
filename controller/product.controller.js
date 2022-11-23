@@ -71,8 +71,8 @@ const findById = async (req, res, next) => {
 const postProduct = async (req, res, next) => {
   const body = req.body;
   try {
-    //This is validation
-    if (!body.name) throw new Error("Please enter then product details");
+    //This is replaced with validation
+    // if (!body.name) throw new Error("Please enter then product details");
     await Products.create(body);
     res.status(201).send("New product added");
     res.end();

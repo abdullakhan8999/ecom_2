@@ -1,6 +1,8 @@
 const express = require("express");
 const router = express.Router();
 const CategoryController = require("./../controller/category.controller");
+const validator = require("./../middlewares/RequestValidator");
+// /ecomm/api/v2/categories
 
 // This is for explaination
 // router.get("/", (req, res, next) => {
@@ -10,12 +12,30 @@ const CategoryController = require("./../controller/category.controller");
 
 // get all category
 router.get("/", CategoryController.findallCategory);
+
 // get category by id
-router.get("/:id", CategoryController.findById);
+router.get(
+  "/:id",
+  [validator.findcategoryValidtor],
+  CategoryController.findById
+);
+
 //Add new element
-router.post("/", CategoryController.postCategory);
+router.post(
+  "/",
+  [validator.categoryNameValidtor],
+  CategoryController.postCategory
+);
 //Delect category
-router.delete("/:id",CategoryController.deleteCategory)
+router.delete(
+  "/:id",
+  [validator.findcategoryValidtor],
+  CategoryController.deleteCategory
+);
 //update category
-router.put("/:id",CategoryController.updateCategory)
+router.put(
+  "/:id",
+  [validator.findcategoryValidtor, validator.categoryNameValidtor],
+  CategoryController.updateCategory
+);
 module.exports = router;

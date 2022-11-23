@@ -1,5 +1,6 @@
 const Categories = require("./../model/Category");
 const sequelizeInstance = require("./../config/db.config");
+
 // create table
 const createTable = async () => {
   await sequelizeInstance.sync({ force: true });
@@ -38,9 +39,6 @@ const findById = async (req, res, next) => {
   const id = await req.params.id;
   const category = await Categories.findByPk(id);
   try {
-    if (!category) {
-      throw new Error(`Category by id: ${id} not found.`);
-    }
     res.write(`Id: ${id} detailes \n${JSON.stringify(category, null, 2)}`);
     res.end();
   } catch (error) {
@@ -48,9 +46,10 @@ const findById = async (req, res, next) => {
   }
 };
 
-//Adding new category
+//Post new category
 const postCategory = async (req, res, next) => {
   try {
+    //This is replaced with validation
     let categoryToAdd = req.body;
     await Categories.create(categoryToAdd);
     res.status(201).send("New category added");
@@ -63,11 +62,7 @@ const postCategory = async (req, res, next) => {
 //Delect category by id
 const deleteCategory = async (req, res, next) => {
   const id = req.params.id;
-  const category = await Categories.findByPk(id);
   try {
-    console.log(JSON.stringify(category, null, 2));
-    if (!category.name) throw new Error("Category not found");
-    res.write(JSON.stringify(category, null, 2));
     await Categories.destroy({ where: { id: id } });
     res.status(201).write("Category delected");
     res.end();
@@ -80,11 +75,6 @@ const deleteCategory = async (req, res, next) => {
 const updateCategory = async (req, res, next) => {
   const id = req.params.id;
   try {
-    if (!req.body.name) {
-      throw new Error("Please Pass body.");
-    }
-    const category = await Categories.findByPk(id);
-    if (!category) throw new Error("Category not found");
     const categoryupdate = {
       name: req.body.name,
     };
