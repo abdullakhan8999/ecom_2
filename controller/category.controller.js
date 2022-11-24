@@ -39,7 +39,9 @@ const findById = async (req, res, next) => {
   const id = await req.params.id;
   const category = await Categories.findByPk(id);
   try {
-    res.write(`Id: ${id} detailes \n${JSON.stringify(category, null, 2)}`);
+    res.write(
+      `Category Id:${id} detailes \n${JSON.stringify(category, null, 2)}`
+    );
     res.end();
   } catch (error) {
     next(error);

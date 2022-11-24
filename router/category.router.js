@@ -16,26 +16,26 @@ router.get("/", CategoryController.findallCategory);
 // get category by id
 router.get(
   "/:id",
-  [validator.findcategoryValidtor],
+  [validator.categoryIdValidtor],
   CategoryController.findById
 );
 
 //Add new element
 router.post(
   "/",
-  [validator.categoryNameValidtor],
+  [validator.nameValidtor],
   CategoryController.postCategory
 );
 //Delect category
 router.delete(
   "/:id",
-  [validator.findcategoryValidtor],
+  [validator.categoryIdValidtor],
   CategoryController.deleteCategory
 );
 //update category
 router.put(
   "/:id",
-  [validator.findcategoryValidtor, validator.categoryNameValidtor],
+  [validator.categoryIdValidtor, validator.nameValidtor],
   CategoryController.updateCategory
 );
 module.exports = router;

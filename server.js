@@ -8,6 +8,10 @@ App.use(bodyparser.json());
 App.use(router);
 // App.use(ErrorHandler); //always at end
 
+// const Category = require("./model/Category");
+// const Product = require("./model/Product");
+
 App.listen(serverConfig.PORT, () => {
   console.log(`Serveris running on http://localhost:${serverConfig.PORT}`);
+  // Category.hasMany(Product);
 });

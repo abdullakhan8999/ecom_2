@@ -1,6 +1,7 @@
 const Products = require("./../model/Product");
 const sequelizeInstance = require("./../config/db.config");
-
+const sequelize = require("sequelize");
+//  Product Api /ecomm/api/v2/products
 // create table
 const createTable = async () => {
   await sequelizeInstance.sync({ force: true });
@@ -45,22 +46,58 @@ const insertProducts = async () => {
 };
 
 const findallProduct = async (req, res, next) => {
-  const product = await Products.findAll();
-
-  // res.writeHead(statusCode {constent Type})
-  res.writeHead(200, { "Content-Type": "application/json" });
-
-  res.write(JSON.stringify(product, null, 2));
+  const categoryId = req.query.categoryId;
+  const minPrice = req.query.minPrice;
+  const maxPrice = req.query.maxPrice;
+  let products = [];
+  if (Object.keys(req.query).length == 0) {
+    products = await Products.findAll();
+  } else {
+    if (categoryId && !(minPrice || maxPrice)) {
+      // this is Api for filter ?categoryId=3
+      products = await filterBYCategoryID(categoryId);
+    } else if (!categoryId && minPrice && maxPrice) {
+      //this is Api for filter by range ?minPrice=1000&maxPrice=15000
+      products = await filter_ProductsBy_Range(minPrice, maxPrice);
+    } else {
+      products = await Products.findAll({
+        where: {
+          categoryId: categoryId,
+          price: {
+            [sequelize.Op.gte]: minPrice,
+            [sequelize.Op.lte]: maxPrice,
+          },
+        },
+      });
+    }
+  }
+  res.writeHead(200, { "Content-Type": "application/json" }); //(statusCode{constent Type})
+  res.write(JSON.stringify(products, null, 2));
   res.end();
+};
+
+const filterBYCategoryID = async (categoryId) => {
+  const filtered_Products = await Products.findAll({
+    where: { categoryId: categoryId },
+  });
+  return filtered_Products;
+};
+const filter_ProductsBy_Range = async (minPrice, maxPrice) => {
+  const filtered_Products = await Products.findAll({
+    where: {
+      price: {
+        [sequelize.Op.gte]: minPrice,
+        [sequelize.Op.lte]: maxPrice,
+      },
+    },
+  });
+  return filtered_Products;
 };
 
 const findById = async (req, res, next) => {
   const id = await req.params.id;
   const product = await Products.findByPk(id);
   try {
-    if (!product) {
-      throw new Error(`product by id: ${id} not found.`);
-    }
     res.write(`Id: ${id} detailes \n${JSON.stringify(product, null, 2)}`);
     res.end();
   } catch (error) {
@@ -71,8 +108,6 @@ const findById = async (req, res, next) => {
 const postProduct = async (req, res, next) => {
   const body = req.body;
   try {
-    //This is replaced with validation
-    // if (!body.name) throw new Error("Please enter then product details");
     await Products.create(body);
     res.status(201).send("New product added");
     res.end();
@@ -83,11 +118,7 @@ const postProduct = async (req, res, next) => {
 
 const deleteProduct = async (req, res, next) => {
   const id = req.params.id;
-  const product = Products.findByPk(id);
   try {
-    if (!product) {
-      throw new Error("Product is not found");
-    }
     await Products.destroy({ where: { id: id } });
     res.status(201).send("Product Delected");
     res.end();
@@ -100,11 +131,6 @@ const deleteProduct = async (req, res, next) => {
 const updateProduct = async (req, res, next) => {
   const id = req.params.id;
   try {
-    if (!req.body.name) {
-      throw new Error("Please Pass body.");
-    }
-    const product = await Products.findByPk(id);
-    if (!product) throw new Error("Product not found");
     const productupdate = {
       name: req.body.name,
     };

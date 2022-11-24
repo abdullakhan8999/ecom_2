@@ -1,17 +1,25 @@
 const express = require("express");
 const router = express.Router();
 const ProductController = require("./../controller/product.controller");
-
+const validator = require("./../middlewares/RequestValidator");
 router.get("/", ProductController.findallProduct);
-router.get("/:id", ProductController.findById);
+router.get("/:id", [validator.productIdValidtor], ProductController.findById);
 
 //adding product
-router.post("/", ProductController.postProduct);
+router.post("/", [validator.nameValidtor], ProductController.postProduct);
 
 //delect product
-router.delete("/:id", ProductController.deleteProduct);
+router.delete(
+  "/:id",
+  [validator.productIdValidtor],
+  ProductController.deleteProduct
+);
 
 //update product
-router.put("/:id", ProductController.updateProduct);
+router.put(
+  "/:id",
+  [validator.productIdValidtor, validator.nameValidtor],
+  ProductController.updateProduct
+);
 
 module.exports = router;
