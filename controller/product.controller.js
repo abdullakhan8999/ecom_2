@@ -82,6 +82,7 @@ const filterBYCategoryID = async (categoryId) => {
   });
   return filtered_Products;
 };
+
 const filter_ProductsBy_Range = async (minPrice, maxPrice) => {
   const filtered_Products = await Products.findAll({
     where: {
