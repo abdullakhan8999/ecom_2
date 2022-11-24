@@ -5,7 +5,7 @@ const authRoute = require("./auth.route");
 const router = express.Router();
 
 router.get("/", (req, res, next) => {
-  res.send(`This is the basic route.`);
+  res.write("This is the basic route.");
   res.end();
 });
 

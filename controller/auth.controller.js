@@ -1,5 +1,5 @@
 const db = require("./../model/index");
-// const config = require("./../config/auth.config");
+const config = require("./../config/auth.config");
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcryptjs");
 const { Sequelize } = require("sequelize");
