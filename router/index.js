@@ -1,10 +1,10 @@
 const express = require("express");
 const router = express.Router();
 const categoryRoute = require("./category.router");
-const productRoute = require("./product.route")
+const productRoute = require("./product.route");
 
 router.get("/", (req, res, next) => {
-  res.send("This is the basic route.");
+  res.send(`This is the basic route.`);
   res.end();
 });
 

@@ -3,47 +3,47 @@ const sequelizeInstance = require("./../config/db.config");
 const sequelize = require("sequelize");
 //  Product Api /ecomm/api/v2/products
 // create table
-const createTable = async () => {
-  await sequelizeInstance.sync({ force: true });
-  insertProducts();
-  console.log("Table create");
-};
+// const createTable = async () => {
+//   await sequelizeInstance.sync({ force: true });
+//   insertProducts();
+//   console.log("Table create");
+// };
 
 // insert values in table
-const insertProducts = async () => {
-  await Products.bulkCreate([
-    {
-      name: "Hrx",
-      categoryId: 1,
-      price: 18000,
-    },
-    {
-      name: "Iphone 13",
-      categoryId: 2,
-      price: 60000,
-    },
-    {
-      name: "Sony bravia",
-      categoryId: 3,
-      price: 40000,
-    },
-    {
-      name: "Boat Rugged",
-      categoryId: 4,
-      price: 4000,
-    },
-    {
-      name: "JBL Storm",
-      categoryId: 4,
-      price: 9000,
-    },
-    {
-      name: "Vu 5",
-      categoryId: 3,
-      price: 32000,
-    },
-  ]);
-};
+// const insertProducts = async () => {
+//   await Products.bulkCreate([
+//     {
+//       name: "Hrx",
+//       categoryId: 1,
+//       price: 18000,
+//     },
+//     {
+//       name: "Iphone 13",
+//       categoryId: 2,
+//       price: 60000,
+//     },
+//     {
+//       name: "Sony bravia",
+//       categoryId: 3,
+//       price: 40000,
+//     },
+//     {
+//       name: "Boat Rugged",
+//       categoryId: 4,
+//       price: 4000,
+//     },
+//     {
+//       name: "JBL Storm",
+//       categoryId: 4,
+//       price: 9000,
+//     },
+//     {
+//       name: "Vu 5",
+//       categoryId: 3,
+//       price: 32000,
+//     },
+//   ]);
+// };
 
 const findallProduct = async (req, res, next) => {
   const categoryId = req.query.categoryId;

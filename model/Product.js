@@ -14,10 +14,11 @@ module.exports = db_Connection.define(
       allowNull: false,
       type: sequelize.DataTypes.STRING,
     },
-    categoryId: {
-      allowNull: false,
-      type: sequelize.DataTypes.INTEGER,
-    },
+    //to test hasMany
+    // categoryId: {
+    //   allowNull: false,
+    //   type: sequelize.DataTypes.INTEGER,
+    // },
     price: {
       allowNull: false,
       type: sequelize.DataTypes.BIGINT,

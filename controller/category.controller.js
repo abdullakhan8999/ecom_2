@@ -2,31 +2,32 @@ const Categories = require("./../model/Category");
 const sequelizeInstance = require("./../config/db.config");
 
 // create table
-const createTable = async () => {
-  await sequelizeInstance.sync({ force: true });
-  insertCategories();
-  console.log("Table create");
-};
+// const createTable = async () => {
+//   await sequelizeInstance.sync({ force: true });
+//   insertCategories();
+//   console.log("Table create");
+// };
 
 // insert values in table
-const insertCategories = async () => {
-  await Categories.bulkCreate([
-    {
-      name: "Fashion",
-    },
-    {
-      name: "Mobile",
-    },
-    {
-      name: "Electronics",
-    },
-    {
-      name: "Appliances",
-    },
-  ]);
-};
+// const insertCategories = async () => {
+//   await Categories.bulkCreate([
+//     {
+//       name: "Fashion",
+//     },
+//     {
+//       name: "Mobile",
+//     },
+//     {
+//       name: "Electronics",
+//     },
+//     {
+//       name: "Appliances",
+//     },
+//   ]);
+// };
 
 // get all category
+
 const findallCategory = async (req, res, next) => {
   const category = await Categories.findAll();
   res.writeHead(200, { "Content-Type": "application/json" });
