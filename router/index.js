@@ -2,7 +2,7 @@ const express = require("express");
 const router = express.Router();
 const categoryRoute = require("./category.router");
 const productRoute = require("./product.route");
-const AuthRoute = require("./auth.route").default;
+const AuthRoute = require("./auth.route");
 
 router.get("/", (req, res, next) => {
   res.send(`This is the basic route.`);
