@@ -14,18 +14,10 @@ const validator = require("./../middlewares/RequestValidator");
 router.get("/", CategoryController.findallCategory);
 
 // get category by id
-router.get(
-  "/:id",
-  [validator.categoryIdValidtor],
-  CategoryController.findById
-);
+router.get("/:id", [validator.categoryIdValidtor], CategoryController.findById);
 
 //Add new element
-router.post(
-  "/",
-  [validator.nameValidtor],
-  CategoryController.postCategory
-);
+router.post("/", [validator.bodyValidtor], CategoryController.postCategory);
 //Delect category
 router.delete(
   "/:id",
@@ -35,7 +27,7 @@ router.delete(
 //update category
 router.put(
   "/:id",
-  [validator.categoryIdValidtor, validator.nameValidtor],
+  [validator.categoryIdValidtor, validator.bodyValidtor],
   CategoryController.updateCategory
 );
 module.exports = router;

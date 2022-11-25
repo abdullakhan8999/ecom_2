@@ -1,10 +1,10 @@
 const Categories = require("./../model/Category");
 const Products = require("./../model/Product");
 
-const nameValidtor = async (req, res, next) => {
-  if (!req.body.name) {
+const bodyValidtor = async (req, res, next) => {
+  if (!req.body) {
     res.status(400).send({
-      message: "Category name is required",
+      message: "Body is required",
     });
   }
   next();
@@ -47,7 +47,7 @@ const productIdValidtor = async (req, res, next) => {
 // };
 
 const validator = {
-  nameValidtor,
+  bodyValidtor,
   categoryIdValidtor,
   productIdValidtor,
   // porductFilterValidator,

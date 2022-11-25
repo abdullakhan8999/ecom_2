@@ -29,6 +29,47 @@ const signup = async (req, res) => {
   }
 };
 
-const signin = async (req, res) => {};
+const signin = async (req, res) => {
+  const password = req.body.password;
+  const userName = await User.findOne({
+    where: { username: req.body.username },
+  });
+
+  if (!userName) {
+    res.status(404).json({
+      message: "User not found",
+    });
+    return;
+  }
+
+  const isVaildPassword = bcrypt.compareSync(
+    req.body.password,
+    userName.password
+  );
+  if (!isVaildPassword) {
+    res.status(401).json({
+      message: "Password is incorrect",
+    });
+    return;
+  }
+
+  const token = jwt.sign({ id: userName.id }, config.secret, {
+    expiresIn: 86400,
+  });
+
+  const authorities = [];
+  const roles = await userName.getRoles();
+  for (let i = 0; i < roles.length; i++) {
+    authorities.push("ROLE_" + roles[i].name.toUpperCase());
+  }
+
+  res.status(200).send({
+    id: userName.id,
+    username: userName.userName,
+    email: userName.email,
+    roles: authorities,
+    accessToken: token,
+  });
+};
 
 module.exports = { signin, signup };

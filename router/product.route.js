@@ -6,7 +6,7 @@ router.get("/", ProductController.findallProduct);
 router.get("/:id", [validator.productIdValidtor], ProductController.findById);
 
 //adding product
-router.post("/", [validator.nameValidtor], ProductController.postProduct);
+router.post("/", [validator.bodyValidtor], ProductController.postProduct);
 
 //delect product
 router.delete(
@@ -18,7 +18,7 @@ router.delete(
 //update product
 router.put(
   "/:id",
-  [validator.productIdValidtor, validator.nameValidtor],
+  [validator.productIdValidtor, validator.bodyValidtor],
   ProductController.updateProduct
 );
 
