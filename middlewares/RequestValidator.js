@@ -46,6 +46,8 @@ const productIdValidtor = async (req, res, next) => {
 //   next();
 // };
 
+
+
 const validator = {
   bodyValidtor,
   categoryIdValidtor,

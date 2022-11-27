@@ -2,7 +2,7 @@ const express = require("express");
 const bodyparser = require("body-parser");
 const serverConfig = require("./config/server.config");
 const router = require("./router/index");
-const ErrorHandler = require("./middlewares/ErrorHandler");
+const ErrorHandler = require("./middleware/middleware");
 //here creating table when sever is up and running
 const dbConnection = require("./config/db.config");
 const Categories = require("./model/Category");
